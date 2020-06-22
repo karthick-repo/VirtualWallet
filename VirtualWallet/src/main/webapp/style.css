@@ -1,0 +1,24 @@
+body {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-right: 150px;
+  margin-left: 80px;
+  background-color: lightblue;
+  text-align:center;
+}
+h1 {
+    color : #000000;
+    text-align : center;
+}
+form {
+    width: 130px;
+    padding:10px;
+}
+#outer
+{
+	text-align:center;
+}
+.inner
+{
+	display:inline-block;
+}
