@@ -14,11 +14,6 @@ public interface CardsDao extends CrudRepository<Carddetails, String> {
 	
 	
 	
-	/*String us="'walletuser2'";
-	String sql="SELECT * FROM Carddetails u WHERE u.userid = "+us;
-	
-	@Query( value = sql, nativeQuery = true)*/
-	
 	@Query(value="SELECT * FROM Carddetails u WHERE u.userid= ?#{[0]}",nativeQuery=true)
 	ArrayList<String> findUsersbyid(String userid);
 	
