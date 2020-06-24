@@ -41,7 +41,7 @@ function val(){
               <label>User Name</label>
               <input type="text" name="userid" id="userid"/><br><br>
               <label>Password</label>
-              <input type="password" name="password" id="password"/><br>
+              <input type="password" name="password" id="password" value="wallet@2020"/><br>
               <br>
               <input type="submit" value="login" />
               <br>

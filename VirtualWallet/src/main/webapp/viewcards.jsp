@@ -8,7 +8,8 @@
 <%@include file="navbar.jsp" %>
 </head>
 <body>
-     <p>${allcards}</p>
+    <p>${allcards}</p>
+     
    <form action="newcard" >  
        <input type="submit" value="create new card" />
      </form> 

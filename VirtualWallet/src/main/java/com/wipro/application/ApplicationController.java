@@ -1,20 +1,12 @@
 package com.wipro.application;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import static com.wipro.application.Constants.*;
 
 @Controller
 public class ApplicationController {
@@ -23,28 +15,35 @@ public class ApplicationController {
 Dao repo;
 @Autowired
 CardsDao cardsrepo;
-ApplicationController ac;
+
+WalletService ws;
+
 
 public String userid;
+public int totalcards=3;
+public int currentcards;
+int balance;
+int rs;
+public int avaliablecards=totalcards-currentcards;
 ArrayList al = new ArrayList(); 
 ArrayList al2 = new ArrayList(); 
 ModelAndView mv = new ModelAndView();
+ArrayList<Integer> find_balance=new ArrayList<Integer>();
 
 
 @RequestMapping("/dashboard")
 public ModelAndView dashboard()
-{
-	 mv.addObject("amount",al.get(2) );
-     mv.addObject("tcards",al.get(4) );
-     
+{	
+	 int cardsused =cardsrepo.findUsersbyid(userid).size();
+	 mv.addObject("amount",al.get(2));//ws.account_balance(userid)
+     mv.addObject("tcards",MAXIMUM_CARD_LIMIT-cardsused );
      mv.setViewName("dashboard.jsp");
 
-	return mv;
+	 return mv;
 }
 
 @RequestMapping("login")
 public String login()
-
 {
 	return "login.jsp";
 }
@@ -100,7 +99,7 @@ public ModelAndView createcards(Carddetails carddetail)
 	{
 		ModelAndView errormessage = new ModelAndView();
 		
-		errormessage.addObject("msg", "Amount should not greater than 10000");
+		errormessage.addObject("msg", MAXIMUM_AMOUNT_REACHED);
 		errormessage.setViewName("error.jsp");
 		
 	    return errormessage;
@@ -109,14 +108,12 @@ public ModelAndView createcards(Carddetails carddetail)
 }
 
 @RequestMapping("validate")
-public ModelAndView validate(Userdetails usrdtls,HttpServletRequest req)
+public ModelAndView validate(Userdetails usrdtls)
 {
-	
-	 userid = usrdtls.getUserid();
-	String password = usrdtls.getPassword();
-	
-	
-	
+    
+	          userid = usrdtls.getUserid();
+	 String password = usrdtls.getPassword();
+	 System.out.println("point2");
 	    if(repo.findById(userid).isPresent())//if userid present in db
         {
 		 al.add(repo.findById(userid).get().getUserid());
@@ -124,9 +121,12 @@ public ModelAndView validate(Userdetails usrdtls,HttpServletRequest req)
 		 al.add(repo.findById(userid).get().getAmount());
 		 al.add(repo.findById(userid).get().getCcard());
 		 al.add(repo.findById(userid).get().getTcards());
-
-         mv.addObject("amount",al.get(2) );
-         mv.addObject("tcards",al.get(4) );
+		 
+		//System.out.println(ws.account_balance(userid));
+         mv.addObject("amount",al.get(2));
+         
+         avaliablecards=cardsrepo.findUsersbyid(userid).size();
+         mv.addObject("tcards",3-avaliablecards );
          
          mv.setViewName("dashboard.jsp");
 
@@ -148,6 +148,15 @@ public ModelAndView validate(Userdetails usrdtls,HttpServletRequest req)
         NotPresent.setViewName("login.jsp");
 		return NotPresent;}
 }
+/*
+<%-- 
+<%  ArrayList<Carddetails> al=new ArrayList<Carddetails>();
+   al=(ArrayList<Carddetails>)request.getAttribute("allcards");
+   for(Carddetails cd:a1)
+   {
+ 	  out.println(cd.getUserid());
+   }
 
 
+  %>--%>*/
 
