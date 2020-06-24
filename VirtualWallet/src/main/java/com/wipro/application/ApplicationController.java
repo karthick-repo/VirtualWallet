@@ -15,7 +15,7 @@ public class ApplicationController {
 Dao repo;
 @Autowired
 CardsDao cardsrepo;
-
+@Autowired
 WalletService ws;
 
 
@@ -35,7 +35,7 @@ ArrayList<Integer> find_balance=new ArrayList<Integer>();
 public ModelAndView dashboard()
 {	
 	 int cardsused =cardsrepo.findUsersbyid(userid).size();
-	 mv.addObject("amount",al.get(2));//ws.account_balance(userid)
+	 mv.addObject("amount",ws.account_balance(userid));
      mv.addObject("tcards",MAXIMUM_CARD_LIMIT-cardsused );
      mv.setViewName("dashboard.jsp");
 
@@ -113,7 +113,7 @@ public ModelAndView validate(Userdetails usrdtls)
     
 	          userid = usrdtls.getUserid();
 	 String password = usrdtls.getPassword();
-	 System.out.println("point2");
+	 
 	    if(repo.findById(userid).isPresent())//if userid present in db
         {
 		 al.add(repo.findById(userid).get().getUserid());
@@ -122,8 +122,8 @@ public ModelAndView validate(Userdetails usrdtls)
 		 al.add(repo.findById(userid).get().getCcard());
 		 al.add(repo.findById(userid).get().getTcards());
 		 
-		//System.out.println(ws.account_balance(userid));
-         mv.addObject("amount",al.get(2));
+		
+		 mv.addObject("amount",ws.account_balance(userid));
          
          avaliablecards=cardsrepo.findUsersbyid(userid).size();
          mv.addObject("tcards",3-avaliablecards );

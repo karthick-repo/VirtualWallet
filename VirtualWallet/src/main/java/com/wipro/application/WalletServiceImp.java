@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 @Service
-public abstract class WalletServiceImp implements WalletService{
+class WalletServiceImp implements WalletService{
 	
 	@Autowired
 	CardsDao cardsrepo;
@@ -20,7 +20,11 @@ public abstract class WalletServiceImp implements WalletService{
 	
 	int balance;
 	int rs;
-	
+	@Override
+	public int sample(String userid)
+	{
+		return cardsrepo.findUsersbyid(userid).size();
+	}
 	//used cards
 	public int  cards_used_size( String userid)
 	{
@@ -31,10 +35,10 @@ public abstract class WalletServiceImp implements WalletService{
 	{
 		
 		int presentcards = cardsrepo.findUsersbyid(userid).size();  //usedcards
-		System.out.println(presentcards);
 		if(presentcards==0)
 		 {
-			 return repo.findById(userid).get().getAmount();
+			int mm=repo.findById(userid).get().getAmount();
+			 return mm;
 		 }
 		else
 		{
@@ -52,6 +56,11 @@ public abstract class WalletServiceImp implements WalletService{
 		 balance=0;
 		return finalbalance;
 		}
+	}
+	@Override
+	public int cards_avaliable_size(String userid) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 
