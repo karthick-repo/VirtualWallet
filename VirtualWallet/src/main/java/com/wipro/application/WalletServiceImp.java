@@ -19,14 +19,10 @@ class WalletServiceImp implements WalletService{
 	Dao repo;
 	
 	int balance;
-	int rs;
-	@Override
-	public int sample(String userid)
-	{
-		return cardsrepo.findUsersbyid(userid).size();
-	}
+	
+	
 	//used cards
-	public int  cards_used_size( String userid)
+	public int  cards_avaliable_size( String userid)
 	{
 		return cardsrepo.findUsersbyid(userid).size();
 	}
@@ -57,11 +53,9 @@ class WalletServiceImp implements WalletService{
 		return finalbalance;
 		}
 	}
-	@Override
-	public int cards_avaliable_size(String userid) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
+	
+	
 	
 
 }

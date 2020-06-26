@@ -22,5 +22,9 @@ public interface CardsDao extends CrudRepository<Carddetails, String> {
 	ArrayList<Integer> findbalance(String userid);
 	
 	
+	@Query(value="SELECT cardname FROM Carddetails u WHERE u.userid= ?#{[0]}",nativeQuery=true)
+	ArrayList<String> findcardname(String userid);
+	
+	
 	       
 }

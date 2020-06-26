@@ -11,9 +11,23 @@
 <h2>Topup Virtual Card</h2>
 <form action="topupcard">
 select Card:
+<p>${allcards.size()}</p>
+<% int k=(int)request.getAttribute("key"); %>
 <label for="MyCard"></label>
-<select id="MyCard">
-  <option value="MyCard">MyCard</option>
+<select name="category">
+ <% if(k == 0){%>
+    
+    <option>None</option>
+   <% }if(k == 1){%>
+        <option value="${allcards.get(0)}">${allcards.get(0)}</option>
+   <%  }if(k==2){%>
+        <option value="${allcards.get(0)}">${allcards.get(0)}</option>
+        <option value="${allcards.get(1)}">${allcards.get(1)}</option>
+  <%  }if(k==3){%>
+        <option value="${allcards.get(0)}">${allcards.get(0)}</option>
+        <option value="${allcards.get(1)}">${allcards.get(1)}</option>
+        <option value="${allcards.get(2)}">${allcards.get(2)}</option>  
+  <%  }%>
 </select>
 <br><br>
 select Account:
@@ -21,17 +35,8 @@ select Account:
 <select id="selectaccount">
   <option value="My Wallet ">My Wallet</option>
 </select>
-<br><br>
-<!-- Amount(Select from below or enter the amount)
-<br><br>
-<button  onclick=enteredamount.value=100>100</button>
-<button Value="500">500</button>
-<button Value="1000">1000</button>
- -->
-<br><br>
-<input type="text"  id=enteredamount name=enteredamount >
-
-<br><br>
+<br><br><br><br>
+<input type="text"  id=enteredamount name=enteredamount ><br><br>
 <input type="submit" value="Topup card" />
 </form>
 </body>

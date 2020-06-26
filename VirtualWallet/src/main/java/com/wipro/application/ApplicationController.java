@@ -51,6 +51,9 @@ public String login()
 public ModelAndView topupcard()
 {
 	ModelAndView topup=new ModelAndView();
+	ArrayList<String> usercards = cardsrepo.findcardname(userid);
+	topup.addObject("allcards", usercards);
+	topup.addObject("key", ws.cards_avaliable_size(userid));
 	topup.setViewName("topupcard.jsp");
 	
 	return topup;
@@ -126,7 +129,7 @@ public ModelAndView validate(Userdetails usrdtls)
 		 mv.addObject("amount",ws.account_balance(userid));
          
          avaliablecards=cardsrepo.findUsersbyid(userid).size();
-         mv.addObject("tcards",3-avaliablecards );
+         mv.addObject("tcards",3-ws.cards_avaliable_size(userid) );
          
          mv.setViewName("dashboard.jsp");
 
@@ -157,6 +160,7 @@ public ModelAndView validate(Userdetails usrdtls)
  	  out.println(cd.getUserid());
    }
 
-
-  %>--%>*/
+  <option value="MyCard">${allcards.get(0)}</option>  
+</select>
+  */
 

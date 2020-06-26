@@ -8,6 +8,7 @@
 <%@include file="navbar.jsp" %>
 </head>
 <body>
+<h2>Create New  VirtualCard</h2>
 <form action="createcards">  
 <div align="center">
 <input type="hidden" id="userid" name="userid" value="${userid}" required><br/><br/> 
