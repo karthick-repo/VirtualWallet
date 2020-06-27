@@ -21,4 +21,12 @@ public interface CardsDao extends CrudRepository<Carddetails, String> {
 	@Query(value = "SELECT cardname FROM Carddetails u WHERE u.userid= ?#{[0]}", nativeQuery = true)
 	ArrayList<String> findcardname(String userid);
 
+	@Query(value = "SELECT amount FROM Carddetails u WHERE u.cardname= ?#{[0]}", nativeQuery = true)
+	String transfercardname(String cardname);
+	
+	@Query(value = "UPDATE amount FROM Carddetails u WHERE u.cardname= ?#{[0]}", nativeQuery = true)
+	String updateamount(String cardnamr);
+
+	
+
 }

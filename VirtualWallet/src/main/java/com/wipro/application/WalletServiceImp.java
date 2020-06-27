@@ -13,8 +13,32 @@ class WalletServiceImp implements WalletService {
 
 	@Autowired
 	Dao repo;
+	
+	@Autowired
+	WalletService ws;
 
 	int balance;
+	int finalbalance;
+	
+	public int verify_details(String cardname, int  amount, String userid)
+	{
+		int acc_balance = ws.account_balance(userid);
+		System.out.println(acc_balance);
+		if (acc_balance >= amount && amount <= 10000) {
+			
+			System.out.println("Valid");
+			finalbalance=finalbalance-amount;
+			String transfer=cardsrepo.transfercardname(cardname);//get card balance
+			cardsrepo.updateamount(cardname);
+			
+			
+		}
+		else
+		{
+			System.out.println("In-Valid");
+		}
+		return 0;
+	}
 
 	// used cards
 	public int cards_avaliable_size(String userid) {
@@ -37,7 +61,7 @@ class WalletServiceImp implements WalletService {
 				balance = balance + ans;
 			}
 			int mainbalance = (int) repo.findById(userid).get().getAmount();
-			int finalbalance = mainbalance - balance;
+			 finalbalance = mainbalance - balance;
 			balance = 0;
 			return finalbalance;
 		}

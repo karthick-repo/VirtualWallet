@@ -5,6 +5,8 @@ import static com.wipro.application.Constants.MAXIMUM_CARD_LIMIT;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,8 +52,14 @@ public class ApplicationController {
 	public ModelAndView topupcard(Carddetails cd) {
 		ModelAndView topup = new ModelAndView();
 		ArrayList<String> usercards = cardsrepo.findcardname(userid);
-		cd.getCardname();
-		cd.getAmount();
+
+		int amount=cd.getAmount();
+		String cardname=cd.getCardname();
+		
+		ws.verify_details(cardname, amount, userid);
+		
+		// cardname,amt,userid
+		
 
 		topup.addObject("allcards", usercards);
 		topup.addObject("key", ws.cards_avaliable_size(userid));

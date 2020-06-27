@@ -10,12 +10,12 @@
 </head>
 <body>
 	<h2>Topup Virtual Card</h2>
-	<form action="topupcard" method="post">
+	<form action="topupcard">
 		<label>Select Card</label>
 		<%
 			int k = (int) request.getAttribute("key");
 		%>
-		<label for="MyCard"></label> <select name="category">
+		<label for="MyCard"></label> <select name="cardname">
 			<%
 				if (k == 0) {
 			%>
@@ -41,14 +41,13 @@
 			<%
 				}
 			%>
-		</select> <br>
-		<br> <label>Select Account</label> <label for="selectaccount"></label>
-		<select id="selectaccount">
+		</select> <br> <br> <label>Select Account</label> <label
+			for="selectaccount"></label> <select id="selectaccount">
 			<option value="My Wallet ">My Wallet</option>
-		</select> <br>
-		<br> <label>Amount</label> <input type="text" id=enteredamount
-			name=enteredamount><br>
-		<br> <input type="submit" value="Topup card" />
+		</select> <br> <br> 
+		<label>Amount</label> 
+		<input type="text" id=amount name=amount><br> <br> <input
+			type="submit" value="Topup card" />
 	</form>
 </body>
 </html>
