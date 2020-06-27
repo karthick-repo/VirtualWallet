@@ -1,31 +1,28 @@
 package com.wipro.application;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 public class Carddetails {
-	
+
 	@Id
-	@Column(name="CARDNUMBER")
+	@Column(name = "CARDNUMBER")
 	private long cardnumber;
 
-	
-	@Column(name="USERID")
+	@Column(name = "USERID")
 	private String userid;
-	
-	@Column(name="CARDNAME")
+
+	@Column(name = "CARDNAME")
 	private String cardname;
-	
-	@Column(name="amount")
+
+	@Column(name = "amount")
 	private int amount;
-	
-	@Column(name="Date")
+
+	@Column(name = "Date")
 	private String date;
-	
+
 	public long getCardnumber() {
 		return cardnumber;
 	}
@@ -41,7 +38,7 @@ public class Carddetails {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 	public String getUserid() {
 		return userid;
 	}
@@ -71,6 +68,5 @@ public class Carddetails {
 		return "CardDetails [userid=" + userid + ", cardname=" + cardname + ", amount=" + amount + ", cardnumber="
 				+ cardnumber + ", date=" + date + "]";
 	}
-	
-	
+
 }
