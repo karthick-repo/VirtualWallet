@@ -53,12 +53,13 @@ public class ApplicationController {
 		ModelAndView topup = new ModelAndView();
 		ArrayList<String> usercards = cardsrepo.findcardname(userid);
 
+		//inputs entered by user 
 		int amount=cd.getAmount();
 		String cardname=cd.getCardname();
 		
-		ws.verify_details(cardname, amount, userid);
-		
-		// cardname,amt,userid
+		//ws.verify_details(cardname, amount, userid);
+		//cardsrepo.updateamount(amount,cardname, userid);
+		cardsrepo.updateamount(amount, cardname, userid);
 		
 
 		topup.addObject("allcards", usercards);

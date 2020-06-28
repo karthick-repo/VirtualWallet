@@ -9,6 +9,6 @@ public interface WalletService {
 
 	public int account_balance(String userid);
 
-	public int verify_details(String cardname, int amount, String userid);
+	public void verify_details(String cardname, int amount, String userid);
 
 }

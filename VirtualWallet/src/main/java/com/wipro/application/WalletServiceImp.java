@@ -20,7 +20,7 @@ class WalletServiceImp implements WalletService {
 	int balance;
 	int finalbalance;
 	
-	public int verify_details(String cardname, int  amount, String userid)
+	public void verify_details(String cardname, int  amount, String userid)
 	{
 		int acc_balance = ws.account_balance(userid);
 		System.out.println(acc_balance);
@@ -28,16 +28,19 @@ class WalletServiceImp implements WalletService {
 			
 			System.out.println("Valid");
 			finalbalance=finalbalance-amount;
-			String transfer=cardsrepo.transfercardname(cardname);//get card balance
-			cardsrepo.updateamount(cardname);
+			//String transfer=cardsrepo.transfercardname(cardname);//get card balance
+			//String ss=cardsrepo.updateamount( amount, cardname,userid);
+			//System.out.println(ss);
+			
 			
 			
 		}
 		else
 		{
 			System.out.println("In-Valid");
+			
 		}
-		return 0;
+		
 	}
 
 	// used cards

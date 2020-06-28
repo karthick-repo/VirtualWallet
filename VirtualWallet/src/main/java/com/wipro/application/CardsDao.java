@@ -1,14 +1,11 @@
 package com.wipro.application;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface CardsDao extends CrudRepository<Carddetails, String> {
 
@@ -23,10 +20,10 @@ public interface CardsDao extends CrudRepository<Carddetails, String> {
 
 	@Query(value = "SELECT amount FROM Carddetails u WHERE u.cardname= ?#{[0]}", nativeQuery = true)
 	String transfercardname(String cardname);
-	
-	@Query(value = "UPDATE amount FROM Carddetails u WHERE u.cardname= ?#{[0]}", nativeQuery = true)
-	String updateamount(String cardnamr);
 
-	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE carddetails a SET a.amount =?1 where a.cardname=?2 AND a.userid=?3", nativeQuery = true)
+	void updateamount(int amount, String cardname, String userid);
 
 }
