@@ -9,7 +9,7 @@
 
 </head>
 <body>
-	<h4>Virtual card created</h4>
+	<h2>Virtual card created</h2>
 	<p>
 		Card Name :${cardname} <br>
 		<br> Card Number : ${cardnumber} <br>

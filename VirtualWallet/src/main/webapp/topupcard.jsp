@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h2>Topup Virtual Card</h2>
-	<form action="topupcard">
+	<form action="topupsuccess">
 		<label>Select Card</label>
 		<%
 			int k = (int) request.getAttribute("key");

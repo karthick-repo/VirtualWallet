@@ -25,5 +25,10 @@ public interface CardsDao extends CrudRepository<Carddetails, String> {
 	@Modifying
 	@Query(value = "UPDATE carddetails a SET a.amount =?1 where a.cardname=?2 AND a.userid=?3", nativeQuery = true)
 	void updateamount(int amount, String cardname, String userid);
+	
+	//find balance of a card 
+	@Query(value = "select amount  from Carddetails b where b.cardname=?1 AND b.userid=?2", nativeQuery = true)
+	int  findbalanceofcard(String cardname, String userid);
+	
 
 }

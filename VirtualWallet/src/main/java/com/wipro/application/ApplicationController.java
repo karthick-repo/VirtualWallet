@@ -5,8 +5,6 @@ import static com.wipro.application.Constants.MAXIMUM_CARD_LIMIT;
 
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,19 +47,11 @@ public class ApplicationController {
 	}
 
 	@RequestMapping("topupcard")
-	public ModelAndView topupcard(Carddetails cd) {
+	public ModelAndView topupcard() {
 		ModelAndView topup = new ModelAndView();
 		ArrayList<String> usercards = cardsrepo.findcardname(userid);
 
-		//inputs entered by user 
-		int amount=cd.getAmount();
-		String cardname=cd.getCardname();
 		
-		//ws.verify_details(cardname, amount, userid);
-		//cardsrepo.updateamount(amount,cardname, userid);
-		cardsrepo.updateamount(amount, cardname, userid);
-		
-
 		topup.addObject("allcards", usercards);
 		topup.addObject("key", ws.cards_avaliable_size(userid));
 		topup.setViewName("topupcard.jsp");
@@ -69,6 +59,27 @@ public class ApplicationController {
 		return topup;
 	}
 
+	@RequestMapping("topupsuccess")
+	public ModelAndView topupsuccess(Carddetails cd) {
+		ModelAndView topupsuccess = new ModelAndView();
+
+		// inputs entered by user
+		int amount = cd.getAmount();
+		String cardname = cd.getCardname();
+		System.out.println(cardname);
+
+		int current_balance = ws.account_balance(userid);
+		repo.update_account_balance(current_balance - amount, userid);
+		
+		int card_balance=cardsrepo.findbalanceofcard(cardname, userid);
+		amount=card_balance+amount;
+		cardsrepo.updateamount(amount, cardname, userid);
+		
+		topupsuccess.setViewName("topupsuccess.jsp");
+		return topupsuccess;
+
+	}
+	
 	@RequestMapping("viewcards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
@@ -95,7 +106,10 @@ public class ApplicationController {
 	@RequestMapping("createcards")
 	public ModelAndView createcards(Carddetails carddetail) {
 		ModelAndView successmessage = new ModelAndView();
+		int amount=carddetail.getAmount();
 		if (carddetail.getAmount() < 10000) {
+		    int current_balance=ws.account_balance(userid);
+			repo.update_account_balance(current_balance-amount, userid);
 			cardsrepo.save(carddetail);
 			successmessage.setViewName("success.jsp");
 			successmessage.addObject("date", "01-01-2050");
@@ -130,8 +144,7 @@ public class ApplicationController {
 			al.add(repo.findById(userid).get().getTcards());
 
 			mv.addObject("amount", ws.account_balance(userid));
-
-			avaliablecards = cardsrepo.findUsersbyid(userid).size();
+		//	avaliablecards = cardsrepo.findUsersbyid(userid).size();
 			mv.addObject("tcards", 3 - ws.cards_avaliable_size(userid));
 
 			mv.setViewName("dashboard.jsp");
@@ -153,11 +166,10 @@ public class ApplicationController {
 		NotPresent.setViewName("login.jsp");
 		return NotPresent;
 	}
+
+	@RequestMapping("logout")
+	public String logout() {
+		return "login.jsp";
+	}
 }
-/*
- * <%-- <% ArrayList<Carddetails> al=new ArrayList<Carddetails>();
- * al=(ArrayList<Carddetails>)request.getAttribute("allcards"); for(Carddetails
- * cd:a1) { out.println(cd.getUserid()); }
- * 
- * <option value="MyCard">${allcards.get(0)}</option> </select>
- */
+
