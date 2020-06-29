@@ -4,18 +4,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
 <%@include file="navbar.jsp"%>
+<title>Virtual Card Error</title>
 </head>
 <body>
-<h2>TopUp Successful</h2>
-
-<label>Card Name</label>
-<p>${Card_Name}</p>
-<label>Card Number</label>
-<p>${Card_Number}</p>
-<label>Card Balance</label>
-<p>${Card_Balance}</p>
+<p>${msg}</p>
 
 <form action="viewcards">
 		<input type="submit" value="Viewcards" />

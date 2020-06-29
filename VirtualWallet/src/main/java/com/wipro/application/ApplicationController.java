@@ -51,7 +51,6 @@ public class ApplicationController {
 		ModelAndView topup = new ModelAndView();
 		ArrayList<String> usercards = cardsrepo.findcardname(userid);
 
-		
 		topup.addObject("allcards", usercards);
 		topup.addObject("key", ws.cards_avaliable_size(userid));
 		topup.setViewName("topupcard.jsp");
@@ -70,20 +69,25 @@ public class ApplicationController {
 
 		int current_balance = ws.account_balance(userid);
 		repo.update_account_balance(current_balance - amount, userid);
-		
-		int card_balance=cardsrepo.findbalanceofcard(cardname, userid);
-		amount=card_balance+amount;
+
+		int card_balance = cardsrepo.findbalanceofcard(cardname, userid);
+		amount = card_balance + amount;
 		cardsrepo.updateamount(amount, cardname, userid);
-		
+		card_balance = cardsrepo.findbalanceofcard(cardname, userid);
+
 		topupsuccess.setViewName("topupsuccess.jsp");
+		topupsuccess.addObject("Card_Name", cardname);
+		topupsuccess.addObject("Card_Number", cardsrepo.findcardnumber(cardname, userid));
+		topupsuccess.addObject("Card_Balance", card_balance);
 		return topupsuccess;
 
 	}
-	
+
 	@RequestMapping("viewcards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
 		viewcards.addObject("allcards", cardsrepo.findUsersbyid(userid));
+		viewcards.addObject("currentcards",ws.cards_avaliable_size(userid));
 		viewcards.setViewName("viewcards.jsp");
 		return viewcards;
 	}
@@ -94,6 +98,7 @@ public class ApplicationController {
 
 		long first14 = (long) (Math.random() * 10000000000000000L);
 		long cardnumber = 52000L + first14;
+		
 
 		newcard.addObject("cardnumber", cardnumber);
 		newcard.addObject("userid", al.get(0));
@@ -106,10 +111,10 @@ public class ApplicationController {
 	@RequestMapping("createcards")
 	public ModelAndView createcards(Carddetails carddetail) {
 		ModelAndView successmessage = new ModelAndView();
-		int amount=carddetail.getAmount();
-		if (carddetail.getAmount() < 10000) {
-		    int current_balance=ws.account_balance(userid);
-			repo.update_account_balance(current_balance-amount, userid);
+		int amount = carddetail.getAmount();
+		int acc_current_balance = ws.account_balance(userid);
+		if (carddetail.getAmount() <=10000) {
+			repo.update_account_balance(acc_current_balance - amount, userid);
 			cardsrepo.save(carddetail);
 			successmessage.setViewName("success.jsp");
 			successmessage.addObject("date", "01-01-2050");
@@ -122,7 +127,7 @@ public class ApplicationController {
 			ModelAndView errormessage = new ModelAndView();
 
 			errormessage.addObject("msg", MAXIMUM_AMOUNT_REACHED);
-			errormessage.setViewName("error.jsp");
+			errormessage.setViewName("virtual_card_error.jsp");
 
 			return errormessage;
 
@@ -144,7 +149,7 @@ public class ApplicationController {
 			al.add(repo.findById(userid).get().getTcards());
 
 			mv.addObject("amount", ws.account_balance(userid));
-		//	avaliablecards = cardsrepo.findUsersbyid(userid).size();
+			// avaliablecards = cardsrepo.findUsersbyid(userid).size();
 			mv.addObject("tcards", 3 - ws.cards_avaliable_size(userid));
 
 			mv.setViewName("dashboard.jsp");
@@ -172,4 +177,3 @@ public class ApplicationController {
 		return "login.jsp";
 	}
 }
-

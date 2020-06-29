@@ -1,21 +1,16 @@
-body {
-	margin-top: 100px;
-	margin-bottom: 100px;
-	margin-right: 150px;
-	margin-left: 80px;
-	background-color: lightblue;
-	text-align: center;
-}
 
 h1 {
 	color: #000000;
 	text-align: center;
 }
 
+.loginbody {
+	margin:0 auto;
+	width:250px;
+	padding: 50px;
+}
 form {
-	width: 130px;
-	padding: 10px;
-	text-align: center;
+	
 }
 
 #outer {
@@ -24,4 +19,10 @@ form {
 
 .inner {
 	display: inline-block;
+	width: 130px;
+	padding: 10px;
+	text-align: center;
+}
+h3{
+	display:inline;
 }

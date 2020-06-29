@@ -12,7 +12,14 @@
 	<p>${allcards}</p>
 
 	<form action="newcard">
+	<%
+			int used_cards = (int) request.getAttribute("currentcards");
+		%>
+		<%if(used_cards<3){%>
 		<input type="submit" value="create new card" />
+		<%}else {%>
+		<button value="button" disabled>Create new card</button>
+		<%}%>
 	</form>
 
 </body>

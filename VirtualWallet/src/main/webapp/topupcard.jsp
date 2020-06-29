@@ -5,11 +5,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Topup virtual card</title>
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="formstyle.css" />
 <%@include file="navbar.jsp"%>
 </head>
 <body>
-	<h2>Topup Virtual Card</h2>
+	<h3>Topup Virtual Card</h3><br><br><br><br>
 	<form action="topupsuccess">
 		<label>Select Card</label>
 		<%
@@ -46,8 +46,22 @@
 			<option value="My Wallet ">My Wallet</option>
 		</select> <br> <br> 
 		<label>Amount</label> 
-		<input type="text" id=amount name=amount><br> <br> <input
-			type="submit" value="Topup card" />
+		<input type="text" id=amount name=amount><br> <br>
+		<%
+			if (k != 0) {
+		%>
+		<input type="submit" value="Topup Card" />
+		<%
+			}
+		%>
+		<%
+			if (k == 0) {
+		%>
+		<p style="color: red; text-align: center">No Cards Created</p><br>
+		<button type="button" disabled>Topup Card</button>
+		<%
+			}
+		%>
 	</form>
 </body>
 </html>
