@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>View cards</title>
+<title>View Cards Wallet-View Cards</title>
 <%@include file="navbar.jsp"%>
 </head>
 <body>
@@ -16,9 +16,10 @@
 			int used_cards = (int) request.getAttribute("currentcards");
 		%>
 		<%if(used_cards<3){%>
-		<input type="submit" value="create new card" />
+		<button id="btn-createcard">Create a Virtual Card</button>
 		<%}else {%>
-		<button value="button" disabled>Create new card</button>
+		<div id="information"><p style="color: red; text-align: center">You have reached the limit to create new card</p><br></div>
+		<button id="btn-createcard" disabled>Create a Virtual Card</button>
 		<%}%>
 	</form>
 

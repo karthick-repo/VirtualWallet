@@ -5,14 +5,19 @@
 <head>
 <meta charset="ISO-8859-1">
 <%@include file="navbar.jsp"%>
-<div style="width: 300px; height: 100px; border: 1px solid #000;">
-	Avaliable Balance <br>
-	<br> <input type="text" name="avbalance" value="${amount}"
-		readonly>
+<title>Virtual Wallet-Home</title>
+</head>
+<div style="width: 300px; height: 130px; border: 1px solid #000;">
+    <h4>My Wallet</h4>
+	<label>Available Balance</label> <br><br>
+	<label id="wallet-balance">${amount}</label>
+		
 </div>
-<div style="width: 300px; height: 100px; border: 1px solid #000;">
-	Avaliable Cards <br>
-	<br> <input type="text" name="avcards" value="${tcards}" readonly>
+<div style="width: 300px; height: 130px; border: 1px solid #000;">
+<h4>Cards</h4>
+	<label>Available Cards </label><br>
+	<br>
+	<label id="cards-remaining">${tcards}</label>
 </div>
 </body>
 </html>

@@ -58,28 +58,42 @@ public class ApplicationController {
 		return topup;
 	}
 
-	@RequestMapping("topupsuccess")
+	@RequestMapping("topupvalidate")
 	public ModelAndView topupsuccess(Carddetails cd) {
 		ModelAndView topupsuccess = new ModelAndView();
 
 		// inputs entered by user
 		int amount = cd.getAmount();
 		String cardname = cd.getCardname();
-		System.out.println(cardname);
-
-		int current_balance = ws.account_balance(userid);
-		repo.update_account_balance(current_balance - amount, userid);
-
 		int card_balance = cardsrepo.findbalanceofcard(cardname, userid);
-		amount = card_balance + amount;
-		cardsrepo.updateamount(amount, cardname, userid);
-		card_balance = cardsrepo.findbalanceofcard(cardname, userid);
+		
+		if((amount>=100&&amount<=1000)&&(card_balance+amount<=10000))
+		{
+			int current_balance = ws.account_balance(userid);
+			repo.update_account_balance(current_balance - amount, userid);
 
-		topupsuccess.setViewName("topupsuccess.jsp");
-		topupsuccess.addObject("Card_Name", cardname);
-		topupsuccess.addObject("Card_Number", cardsrepo.findcardnumber(cardname, userid));
-		topupsuccess.addObject("Card_Balance", card_balance);
-		return topupsuccess;
+			
+			amount = card_balance + amount;
+			cardsrepo.updateamount(amount, cardname, userid);
+			card_balance = cardsrepo.findbalanceofcard(cardname, userid);
+
+			topupsuccess.setViewName("topupsuccess.jsp");
+			topupsuccess.addObject("Card_Name", cardname);
+			topupsuccess.addObject("Card_Number", cardsrepo.findcardnumber(cardname, userid));
+			topupsuccess.addObject("Card_Balance", card_balance);
+			return topupsuccess;
+		}
+		else
+		{
+			ModelAndView topuperror = new ModelAndView();
+			
+			topuperror.setViewName("virtual_card_error.jsp");
+			topuperror.addObject("msg", MAXIMUM_AMOUNT_REACHED);
+			
+			return topuperror;
+		}
+
+		
 
 	}
 

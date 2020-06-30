@@ -16,7 +16,7 @@
 		var userName = document.getElementById("userid");
 		var password = document.getElementById("password");
 		if (userName.value.trim().length > 30) {
-			document.getElementById("error-message").innerHTML = "Userid not more than 30 characters";
+			document.getElementById("error-message").innerHTML = "User Name  not more than 30 characters";
 			return false;
 
 		} else if (password.value.trim().length > 30) {
@@ -40,7 +40,7 @@
 	    <input type="text" name="userid" id="userid" /><br>
 		<br> <label>Password</label><br> <input type="password"
 			name="password" id="password" value="wallet@2020" /><br> <br>
-		<input type="submit" value="login" /> <br> <br>
+		<button id="login">login</button>
 
 	</form>
 </body>
