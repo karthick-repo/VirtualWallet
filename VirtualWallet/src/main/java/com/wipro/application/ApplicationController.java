@@ -100,10 +100,19 @@ public class ApplicationController {
 	@RequestMapping("viewcards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
+		if(cardsrepo.findUsersbyid(username).isEmpty())
+        {
+			viewcards.addObject("currentcards",ws.cards_avaliable_size(username));
+			viewcards.setViewName("viewcards.jsp");
+			return viewcards;
+        }
+		else {
 		viewcards.addObject("allcards", cardsrepo.findUsersbyid(username));
+		
 		viewcards.addObject("currentcards",ws.cards_avaliable_size(username));
 		viewcards.setViewName("viewcards.jsp");
 		return viewcards;
+        }
 	}
 
 	@RequestMapping("newcard")
