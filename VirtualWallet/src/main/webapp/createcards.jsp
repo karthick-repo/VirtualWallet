@@ -12,7 +12,7 @@
 <body>
 	<form action="createcards">
 		<div align="center" style="margin-top: -70px;">
-			<input type="hidden" id="userid" name="userid" value="${userid}"
+			<input type="hidden" id="username" name="username" value="${username}"
 				required><br />
 			<br /> <input type="hidden" id="cardnumber" name="cardnumber"
 				value="${cardnumber}" required><br />

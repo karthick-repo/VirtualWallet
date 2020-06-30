@@ -13,7 +13,7 @@
 	function val() {
 
 		document.getElementById("error-message").innerHTML = "";
-		var userName = document.getElementById("userid");
+		var userName = document.getElementById("username");
 		var password = document.getElementById("password");
 		if (userName.value.trim().length > 30) {
 			document.getElementById("error-message").innerHTML = "User Name  not more than 30 characters";
@@ -37,7 +37,7 @@
 	
 	<form action="validate" onsubmit="return val()">
 		<label>User Name</label>
-	    <input type="text" name="userid" id="userid" /><br>
+	    <input type="text" name="username" id="username" /><br>
 		<br> <label>Password</label><br> <input type="password"
 			name="password" id="password" value="wallet@2020" /><br> <br>
 		<button id="login">login</button>

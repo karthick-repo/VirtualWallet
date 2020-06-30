@@ -20,7 +20,7 @@ public class ApplicationController {
 	@Autowired
 	WalletService ws;
 
-	public String userid;
+	public String username;
 	public int totalcards = 3;
 	public int currentcards;
 	int balance;
@@ -33,8 +33,8 @@ public class ApplicationController {
 
 	@RequestMapping("/dashboard")
 	public ModelAndView dashboard() {
-		int cardsused = cardsrepo.findUsersbyid(userid).size();
-		mv.addObject("amount", ws.account_balance(userid));
+		int cardsused = cardsrepo.findUsersbyid(username).size();
+		mv.addObject("amount", ws.account_balance(username));
 		mv.addObject("tcards", MAXIMUM_CARD_LIMIT - cardsused);
 		mv.setViewName("dashboard.jsp");
 
@@ -49,10 +49,10 @@ public class ApplicationController {
 	@RequestMapping("topupcard")
 	public ModelAndView topupcard() {
 		ModelAndView topup = new ModelAndView();
-		ArrayList<String> usercards = cardsrepo.findcardname(userid);
+		ArrayList<String> usercards = cardsrepo.findcardname(username);
 
 		topup.addObject("allcards", usercards);
-		topup.addObject("key", ws.cards_avaliable_size(userid));
+		topup.addObject("key", ws.cards_avaliable_size(username));
 		topup.setViewName("topupcard.jsp");
 
 		return topup;
@@ -65,21 +65,21 @@ public class ApplicationController {
 		// inputs entered by user
 		int amount = cd.getAmount();
 		String cardname = cd.getCardname();
-		int card_balance = cardsrepo.findbalanceofcard(cardname, userid);
+		int card_balance = cardsrepo.findbalanceofcard(cardname, username);
 		
 		if((amount>=100&&amount<=1000)&&(card_balance+amount<=10000))
 		{
-			int current_balance = ws.account_balance(userid);
-			repo.update_account_balance(current_balance - amount, userid);
+			int current_balance = ws.account_balance(username);
+			repo.update_account_balance(current_balance - amount, username);
 
 			
 			amount = card_balance + amount;
-			cardsrepo.updateamount(amount, cardname, userid);
-			card_balance = cardsrepo.findbalanceofcard(cardname, userid);
+			cardsrepo.updateamount(amount, cardname, username);
+			card_balance = cardsrepo.findbalanceofcard(cardname, username);
 
 			topupsuccess.setViewName("topupsuccess.jsp");
 			topupsuccess.addObject("Card_Name", cardname);
-			topupsuccess.addObject("Card_Number", cardsrepo.findcardnumber(cardname, userid));
+			topupsuccess.addObject("Card_Number", cardsrepo.findcardnumber(cardname, username));
 			topupsuccess.addObject("Card_Balance", card_balance);
 			return topupsuccess;
 		}
@@ -100,8 +100,8 @@ public class ApplicationController {
 	@RequestMapping("viewcards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
-		viewcards.addObject("allcards", cardsrepo.findUsersbyid(userid));
-		viewcards.addObject("currentcards",ws.cards_avaliable_size(userid));
+		viewcards.addObject("allcards", cardsrepo.findUsersbyid(username));
+		viewcards.addObject("currentcards",ws.cards_avaliable_size(username));
 		viewcards.setViewName("viewcards.jsp");
 		return viewcards;
 	}
@@ -115,7 +115,7 @@ public class ApplicationController {
 		
 
 		newcard.addObject("cardnumber", cardnumber);
-		newcard.addObject("userid", al.get(0));
+		newcard.addObject("username", al.get(0));
 		newcard.addObject("date", "01-01-2050");
 		newcard.setViewName("createcards.jsp");
 		return newcard;
@@ -126,9 +126,9 @@ public class ApplicationController {
 	public ModelAndView createcards(Carddetails carddetail) {
 		ModelAndView successmessage = new ModelAndView();
 		int amount = carddetail.getAmount();
-		int acc_current_balance = ws.account_balance(userid);
+		int acc_current_balance = ws.account_balance(username);
 		if (carddetail.getAmount() <=10000) {
-			repo.update_account_balance(acc_current_balance - amount, userid);
+			repo.update_account_balance(acc_current_balance - amount, username);
 			cardsrepo.save(carddetail);
 			successmessage.setViewName("success.jsp");
 			successmessage.addObject("date", "01-01-2050");
@@ -151,24 +151,24 @@ public class ApplicationController {
 	@RequestMapping("validate")
 	public ModelAndView validate(Userdetails usrdtls) {
 
-		userid = usrdtls.getUserid();
+		username = usrdtls.getusername();
 		String password = usrdtls.getPassword();
 
-		if (repo.findById(userid).isPresent())// if userid present in db
+		if (repo.findById(username).isPresent())// if username present in db
 		{
-			al.add(repo.findById(userid).get().getUserid());
-			al.add(repo.findById(userid).get().getPassword());
-			al.add(repo.findById(userid).get().getAmount());
-			al.add(repo.findById(userid).get().getCcard());
-			al.add(repo.findById(userid).get().getTcards());
+			al.add(repo.findById(username).get().getusername());
+			al.add(repo.findById(username).get().getPassword());
+			al.add(repo.findById(username).get().getAmount());
+			al.add(repo.findById(username).get().getCcard());
+			al.add(repo.findById(username).get().getTcards());
 
-			mv.addObject("amount", ws.account_balance(userid));
-			// avaliablecards = cardsrepo.findUsersbyid(userid).size();
-			mv.addObject("tcards", 3 - ws.cards_avaliable_size(userid));
+			mv.addObject("amount", ws.account_balance(username));
+			// avaliablecards = cardsrepo.findUsersbyid(username).size();
+			mv.addObject("tcards", 3 - ws.cards_avaliable_size(username));
 
 			mv.setViewName("dashboard.jsp");
 
-			if (al.get(0).equals(userid) && (al.get(1).equals(password))) // check credentials crt
+			if (al.get(0).equals(username) && (al.get(1).equals(password))) // check credentials crt
 				return mv;
 			else {
 				ModelAndView er = new ModelAndView();

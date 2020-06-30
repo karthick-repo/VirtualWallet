@@ -11,8 +11,8 @@ public class Carddetails {
 	@Column(name = "CARDNUMBER")
 	private long cardnumber;
 
-	@Column(name = "USERID")
-	private String userid;
+	@Column(name = "username")
+	private String username;
 
 	@Column(name = "CARDNAME")
 	private String cardname;
@@ -39,12 +39,12 @@ public class Carddetails {
 		this.date = date;
 	}
 
-	public String getUserid() {
-		return userid;
+	public String getusername() {
+		return username;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setusername(String username) {
+		this.username = username;
 	}
 
 	public String getCardname() {
@@ -65,7 +65,7 @@ public class Carddetails {
 
 	@Override
 	public String toString() {
-		return "CardDetails [userid=" + userid + ", cardname=" + cardname + ", amount=" + amount + ", cardnumber="
+		return "CardDetails [username=" + username + ", cardname=" + cardname + ", amount=" + amount + ", cardnumber="
 				+ cardnumber + ", date=" + date + "]";
 	}
 

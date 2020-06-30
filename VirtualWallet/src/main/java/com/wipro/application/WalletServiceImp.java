@@ -20,17 +20,17 @@ class WalletServiceImp implements WalletService {
 	int balance;
 	int finalbalance;
 	
-	public void verify_details(String cardname, int  amount, String userid)
+	public void verify_details(String cardname, int  amount, String username)
 	{
-		int acc_balance = ws.account_balance(userid);
+		int acc_balance = ws.account_balance(username);
 		System.out.println(acc_balance);
 		if (acc_balance >= amount && amount <= 10000) {
 			
 			System.out.println("Valid");
 			finalbalance=finalbalance-amount;
-			repo.findById(userid).get().setAmount(finalbalance);
+			repo.findById(username).get().setAmount(finalbalance);
 			//String transfer=cardsrepo.transfercardname(cardname);//get card balance
-			//String ss=cardsrepo.updateamount( amount, cardname,userid);
+			//String ss=cardsrepo.updateamount( amount, cardname,username);
 			//System.out.println(ss);
 			
 			
@@ -45,13 +45,13 @@ class WalletServiceImp implements WalletService {
 	}
 
 	// used cards
-	public int cards_avaliable_size(String userid) {
-		return cardsrepo.findUsersbyid(userid).size();
+	public int cards_avaliable_size(String username) {
+		return cardsrepo.findUsersbyid(username).size();
 	}
 
-	public int account_balance(String userid) {
+	public int account_balance(String username) {
 
-		return repo.findById(userid).get().getAmount();
+		return repo.findById(username).get().getAmount();
 	}
 
 }

@@ -9,7 +9,7 @@ public interface Dao extends CrudRepository<Userdetails, String> {
 	
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE userdetails a SET a.amount =?1 where  a.userid=?2", nativeQuery = true)
-	void update_account_balance(int amount,String userid);
+	@Query(value = "UPDATE userdetails a SET a.amount =?1 where  a.username=?2", nativeQuery = true)
+	void update_account_balance(int amount,String username);
 
 }

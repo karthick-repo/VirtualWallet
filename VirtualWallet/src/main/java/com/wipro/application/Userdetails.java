@@ -8,8 +8,8 @@ import javax.persistence.Id;
 public class Userdetails {
 
 	@Id
-	@Column(name = "USERID")
-	private String userid;
+	@Column(name = "username")
+	private String username;
 
 	@Column(name = "PASSWORD")
 	private String password;
@@ -47,12 +47,12 @@ public class Userdetails {
 		this.tcards = tcards;
 	}
 
-	public String getUserid() {
-		return userid;
+	public String getusername() {
+		return username;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setusername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -65,7 +65,7 @@ public class Userdetails {
 
 	@Override
 	public String toString() {
-		return "user [userid=" + userid + ", password=" + password + "]";
+		return "user [username=" + username + ", password=" + password + "]";
 	}
 
 }
