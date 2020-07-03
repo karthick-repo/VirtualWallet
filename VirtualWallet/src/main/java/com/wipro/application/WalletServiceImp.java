@@ -20,6 +20,8 @@ class WalletServiceImp implements WalletService {
 	int balance;
 	int finalbalance;
 	
+	ArrayList al = new ArrayList();
+	
 	public void verify_details(String cardname, int  amount, String username)
 	{
 		int acc_balance = ws.account_balance(username);
@@ -29,11 +31,7 @@ class WalletServiceImp implements WalletService {
 			System.out.println("Valid");
 			finalbalance=finalbalance-amount;
 			repo.findById(username).get().setAmount(finalbalance);
-			//String transfer=cardsrepo.transfercardname(cardname);//get card balance
-			//String ss=cardsrepo.updateamount( amount, cardname,username);
-			//System.out.println(ss);
-			
-			
+				
 			
 		}
 		else
@@ -52,6 +50,35 @@ class WalletServiceImp implements WalletService {
 	public int account_balance(String username) {
 
 		return repo.findById(username).get().getAmount();
+	}
+	public int validate_user_details(Userdetails usrdtls)
+	{ 
+		 String username = usrdtls.getusername();
+		 String password = usrdtls.getPassword();
+
+		if (repo.findById(username).isPresent())// if username present in db
+		{
+			al.add(repo.findById(username).get().getusername());
+			al.add(repo.findById(username).get().getPassword());
+			al.add(repo.findById(username).get().getAmount());
+			al.add(repo.findById(username).get().getCcard());
+			al.add(repo.findById(username).get().getTcards());
+			
+			if (al.get(0).equals(username) && (al.get(1).equals(password)))
+			{
+				return 1;
+			}
+			else 
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return 0;
+			
+		}
+		
 	}
 
 }

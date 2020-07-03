@@ -16,7 +16,7 @@
 		<br> Expiry on : ${date} <br>
 		<br> Card Balance : ${cardbalance}
 	</p>
-	<form action="viewcards">
+	<form action="view_cards">
 		<input type="submit" value="Viewcards" />
 	</form>
 

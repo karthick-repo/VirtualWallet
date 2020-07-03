@@ -25,13 +25,14 @@ public class ApplicationController {
 	public int currentcards;
 	int balance;
 	int rs;
+	int check=0;
 	public int avaliablecards = totalcards - currentcards;
 	ArrayList al = new ArrayList();
 	ArrayList al2 = new ArrayList();
 	ModelAndView mv = new ModelAndView();
 	ArrayList<Integer> find_balance = new ArrayList<Integer>();
 
-	@RequestMapping("/dashboard")
+	/*@RequestMapping("/dashboard")
 	public ModelAndView dashboard() {
 		int cardsused = cardsrepo.findUsersbyid(username).size();
 		mv.addObject("amount", ws.account_balance(username));
@@ -39,7 +40,7 @@ public class ApplicationController {
 		mv.setViewName("dashboard.jsp");
 
 		return mv;
-	}
+	}*/
 
 	@RequestMapping("login")
 	public String login() {
@@ -97,20 +98,20 @@ public class ApplicationController {
 
 	}
 
-	@RequestMapping("viewcards")
+	@RequestMapping("view_cards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
 		if(cardsrepo.findUsersbyid(username).isEmpty())
         {
 			viewcards.addObject("currentcards",ws.cards_avaliable_size(username));
-			viewcards.setViewName("viewcards.jsp");
+			viewcards.setViewName("view_cards.jsp");
 			return viewcards;
         }
 		else {
 		viewcards.addObject("allcards", cardsrepo.findUsersbyid(username));
 		
 		viewcards.addObject("currentcards",ws.cards_avaliable_size(username));
-		viewcards.setViewName("viewcards.jsp");
+		viewcards.setViewName("view_cards.jsp");
 		return viewcards;
         }
 	}
@@ -124,7 +125,7 @@ public class ApplicationController {
 		
 
 		newcard.addObject("cardnumber", cardnumber);
-		newcard.addObject("username", al.get(0));
+		newcard.addObject("username", username);
 		newcard.addObject("date", "01-01-2050");
 		newcard.setViewName("createcards.jsp");
 		return newcard;
@@ -157,42 +158,34 @@ public class ApplicationController {
 		}
 	}
 
-	@RequestMapping("validate")
+	@RequestMapping("dashboard")
 	public ModelAndView validate(Userdetails usrdtls) {
 
-		username = usrdtls.getusername();
-		String password = usrdtls.getPassword();
-
-		if (repo.findById(username).isPresent())// if username present in db
-		{
-			al.add(repo.findById(username).get().getusername());
-			al.add(repo.findById(username).get().getPassword());
-			al.add(repo.findById(username).get().getAmount());
-			al.add(repo.findById(username).get().getCcard());
-			al.add(repo.findById(username).get().getTcards());
-
+		if (check == 1) {
 			mv.addObject("amount", ws.account_balance(username));
-			// avaliablecards = cardsrepo.findUsersbyid(username).size();
 			mv.addObject("tcards", 3 - ws.cards_avaliable_size(username));
-
 			mv.setViewName("dashboard.jsp");
-
-			if (al.get(0).equals(username) && (al.get(1).equals(password))) // check credentials crt
+			return mv;
+		} else {
+			username = usrdtls.getusername();
+			check = ws.validate_user_details(usrdtls);
+			System.out.println("11");
+			if (check == 1) {
+				mv.addObject("amount", ws.account_balance(username));
+				mv.addObject("tcards", 3 - ws.cards_avaliable_size(username));
+				mv.setViewName("dashboard.jsp");
 				return mv;
-			else {
+
+			} else {
+				System.out.println("11");
 				ModelAndView er = new ModelAndView();
 				String message = "Invalid credentials";
 				er.addObject("error", message);
 				er.setViewName("login.jsp");
 				return er;
+
 			}
 		}
-		ModelAndView NotPresent = new ModelAndView();
-		NotPresent.setViewName("login.jsp");
-		String message = "Not a registered user";
-		NotPresent.addObject("error", message);
-		NotPresent.setViewName("login.jsp");
-		return NotPresent;
 	}
 
 	@RequestMapping("logout")

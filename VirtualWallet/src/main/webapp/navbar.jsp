@@ -26,7 +26,7 @@
 					</div>
 					</form>
 					<div class="inner">
-						<form action="viewcards">
+						<form action="view_cards">
 							<button>View Cards</button>
 						</form>
 					</div>

@@ -17,7 +17,7 @@
 <label>Card Balance</label>
 <p>${Card_Balance}</p>
 
-<form action="viewcards">
+<form action="view_cards">
 		<input type="submit" value="Viewcards" />
 	</form>
 </body>

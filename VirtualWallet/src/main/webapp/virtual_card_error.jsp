@@ -10,7 +10,7 @@
 <body>
 <p>${msg}</p>
 
-<form action="viewcards">
+<form action="view_cards">
 		<input type="submit" value="Viewcards" />
 	</form>
 </body>
