@@ -21,7 +21,7 @@
 			<br /> Amount : <input type="number" name="amount" id="amount"
 				required /><br />
 			<br /> Card Name : <input type="text" name="cardname" id="cardname"
-				required><br />
+				required><br/>
 			<br /> select Account: <label for="selectaccount"></label> <select
 				id="selectaccount">
 				<option value="My Wallet">My Wallet</option>
