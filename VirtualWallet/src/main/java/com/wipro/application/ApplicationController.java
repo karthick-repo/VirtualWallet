@@ -116,7 +116,7 @@ public class ApplicationController {
         }
 	}
 
-	@RequestMapping("newcard")
+	@RequestMapping("create_card")
 	public ModelAndView newcard() {
 		ModelAndView newcard = new ModelAndView();
 
@@ -127,12 +127,12 @@ public class ApplicationController {
 		newcard.addObject("cardnumber", cardnumber);
 		newcard.addObject("username", username);
 		newcard.addObject("date", "01-01-2050");
-		newcard.setViewName("createcards.jsp");
+		newcard.setViewName("create_card.jsp");
 		return newcard;
 
 	}
 
-	@RequestMapping("createcards")
+	@RequestMapping("create_card_success")
 	public ModelAndView createcards(Carddetails carddetail) {
 		ModelAndView successmessage = new ModelAndView();
 		int amount = carddetail.getAmount();
@@ -140,7 +140,7 @@ public class ApplicationController {
 		if (carddetail.getAmount() <=10000) {
 			repo.update_account_balance(acc_current_balance - amount, username);
 			cardsrepo.save(carddetail);
-			successmessage.setViewName("success.jsp");
+			successmessage.setViewName("create_card_success.jsp");
 			successmessage.addObject("date", "01-01-2050");
 			successmessage.addObject("cardname", carddetail.getCardname());
 			successmessage.addObject("cardnumber", carddetail.getCardnumber());
