@@ -25,22 +25,13 @@ public class ApplicationController {
 	public int currentcards;
 	int balance;
 	int rs;
-	int check=0;
+	int check = 0;
 	public int avaliablecards = totalcards - currentcards;
 	ArrayList al = new ArrayList();
 	ArrayList al2 = new ArrayList();
 	ModelAndView mv = new ModelAndView();
 	ArrayList<Integer> find_balance = new ArrayList<Integer>();
 
-	/*@RequestMapping("/dashboard")
-	public ModelAndView dashboard() {
-		int cardsused = cardsrepo.findUsersbyid(username).size();
-		mv.addObject("amount", ws.account_balance(username));
-		mv.addObject("tcards", MAXIMUM_CARD_LIMIT - cardsused);
-		mv.setViewName("dashboard.jsp");
-
-		return mv;
-	}*/
 
 	@RequestMapping("login")
 	public String login() {
@@ -67,13 +58,11 @@ public class ApplicationController {
 		int amount = cd.getAmount();
 		String cardname = cd.getCardname();
 		int card_balance = cardsrepo.findbalanceofcard(cardname, username);
-		
-		if((amount>=100&&amount<=1000)&&(card_balance+amount<=10000))
-		{
+
+		if ((amount >= 100 && amount <= 1000) && (card_balance + amount <= 10000)) {
 			int current_balance = ws.account_balance(username);
 			repo.update_account_balance(current_balance - amount, username);
 
-			
 			amount = card_balance + amount;
 			cardsrepo.updateamount(amount, cardname, username);
 			card_balance = cardsrepo.findbalanceofcard(cardname, username);
@@ -83,37 +72,45 @@ public class ApplicationController {
 			topupsuccess.addObject("Card_Number", cardsrepo.findcardnumber(cardname, username));
 			topupsuccess.addObject("Card_Balance", card_balance);
 			return topupsuccess;
-		}
-		else
-		{
+		} else {
 			ModelAndView topuperror = new ModelAndView();
-			
+
 			topuperror.setViewName("virtual_card_error.jsp");
 			topuperror.addObject("msg", MAXIMUM_AMOUNT_REACHED);
-			
+
 			return topuperror;
 		}
-
-		
 
 	}
 
 	@RequestMapping("view_cards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
-		if(cardsrepo.findUsersbyid(username).isEmpty())
-        {
-			viewcards.addObject("currentcards",ws.cards_avaliable_size(username));
+		if (cardsrepo.findUsersbyid(username).isEmpty()) {
+			viewcards.addObject("currentcards", ws.cards_avaliable_size(username));
 			viewcards.setViewName("view_cards.jsp");
 			return viewcards;
-        }
-		else {
-		viewcards.addObject("allcards", cardsrepo.findUsersbyid(username));
-		
-		viewcards.addObject("currentcards",ws.cards_avaliable_size(username));
-		viewcards.setViewName("view_cards.jsp");
-		return viewcards;
-        }
+		} else {
+			
+			String aaa[][] = cardsrepo.multipleretrival(username);
+			ArrayList<String> allcarddetails = new ArrayList();
+			if(aaa.length>0)
+			{
+			System.out.println(aaa.length);
+			for (int i = 0; i < aaa.length; i++) {
+				for (int j = 0; j < aaa.length; j++) {
+					allcarddetails.add(aaa[i][j]);
+					
+				}
+			}
+			viewcards.addObject("allcards", allcarddetails);
+			}
+			int max_size= allcarddetails.size();
+			viewcards.addObject("totalsize",max_size);
+			viewcards.addObject("currentcards", ws.cards_avaliable_size(username));
+			viewcards.setViewName("view_cards.jsp");
+			return viewcards;
+		}
 	}
 
 	@RequestMapping("create_card")
@@ -122,7 +119,6 @@ public class ApplicationController {
 
 		long first14 = (long) (Math.random() * 10000000000000000L);
 		long cardnumber = 52000L + first14;
-		
 
 		newcard.addObject("cardnumber", cardnumber);
 		newcard.addObject("username", username);
@@ -137,7 +133,7 @@ public class ApplicationController {
 		ModelAndView successmessage = new ModelAndView();
 		int amount = carddetail.getAmount();
 		int acc_current_balance = ws.account_balance(username);
-		if (carddetail.getAmount() <=10000) {
+		if (carddetail.getAmount() <= 10000) {
 			repo.update_account_balance(acc_current_balance - amount, username);
 			cardsrepo.save(carddetail);
 			successmessage.setViewName("create_card_success.jsp");
@@ -169,7 +165,6 @@ public class ApplicationController {
 		} else {
 			username = usrdtls.getusername();
 			check = ws.validate_user_details(usrdtls);
-			System.out.println("11");
 			if (check == 1) {
 				mv.addObject("amount", ws.account_balance(username));
 				mv.addObject("tcards", 3 - ws.cards_avaliable_size(username));
@@ -177,7 +172,6 @@ public class ApplicationController {
 				return mv;
 
 			} else {
-				System.out.println("11");
 				ModelAndView er = new ModelAndView();
 				String message = "Invalid credentials";
 				er.addObject("error", message);
