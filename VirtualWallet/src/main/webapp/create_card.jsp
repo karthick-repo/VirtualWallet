@@ -10,7 +10,7 @@
 </head>
 <h3 style="text-align:center">Create New VirtualCard</h3>
 <body>
-	<form action="create_card_success">
+	<form method="POST" action="create_card_success">
 		<div align="center" style="margin-top: -70px;">
 			<input type="hidden" id="username" name="username" value="${username}"
 				required><br />

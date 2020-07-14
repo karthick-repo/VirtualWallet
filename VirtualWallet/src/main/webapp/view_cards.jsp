@@ -53,7 +53,7 @@
 	</div>
 
 
-	<form action="create_card">
+	<form method="POST" action="create_card">
 		<%
 			int used_cards = (int) request.getAttribute("currentcards");
 		%>
