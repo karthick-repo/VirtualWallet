@@ -4,6 +4,7 @@ import static com.wipro.application.Constants.MAXIMUM_AMOUNT_REACHED;
 import static com.wipro.application.Constants.MAXIMUM_CARD_LIMIT;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,6 @@ public class ApplicationController {
 	ArrayList al2 = new ArrayList();
 	ModelAndView mv = new ModelAndView();
 	ArrayList<Integer> find_balance = new ArrayList<Integer>();
-
 
 	@RequestMapping("login")
 	public String login() {
@@ -88,26 +88,25 @@ public class ApplicationController {
 		ModelAndView viewcards = new ModelAndView();
 		if (cardsrepo.findUsersbyid(username).isEmpty()) {
 			viewcards.addObject("currentcards", ws.cards_avaliable_size(username));
+			viewcards.addObject("totalsize", 0);
 			viewcards.setViewName("view_cards.jsp");
 			return viewcards;
 		} else {
+             
+			ArrayList<String>userscardnumber=cardsrepo.usedcardnumber(username);
+			ArrayList<String>userscardname=cardsrepo.usedcardsname(username);
+			ArrayList<String>usersamount=cardsrepo.usedcardsamount(username);
+			ArrayList<String>usersdate=cardsrepo.usedcardsdate(username);
 			
-			String aaa[][] = cardsrepo.multipleretrival(username);
-			ArrayList<String> allcarddetails = new ArrayList();
-			if(aaa.length>0)
-			{
-			System.out.println(aaa.length);
-			for (int i = 0; i < aaa.length; i++) {
-				for (int j = 0; j < aaa.length; j++) {
-					allcarddetails.add(aaa[i][j]);
-					
-				}
-			}
-			viewcards.addObject("allcards", allcarddetails);
-			}
-			int max_size= allcarddetails.size();
-			viewcards.addObject("totalsize",max_size);
+			
+			viewcards.addObject("allcards",userscardnumber);
+			viewcards.addObject("userscardname",userscardname);
+			viewcards.addObject("usersamount",usersamount);
+			viewcards.addObject("usersdate",usersdate);
+			
+			viewcards.addObject("totalsize", ws.cards_avaliable_size(username));
 			viewcards.addObject("currentcards", ws.cards_avaliable_size(username));
+			
 			viewcards.setViewName("view_cards.jsp");
 			return viewcards;
 		}

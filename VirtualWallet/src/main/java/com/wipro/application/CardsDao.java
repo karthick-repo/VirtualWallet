@@ -1,6 +1,7 @@
 package com.wipro.application;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -34,9 +35,21 @@ public interface CardsDao extends CrudRepository<Carddetails, String> {
 	@Query(value = "select cardnumber from Carddetails c where c.cardname=?1 AND c.username=?2", nativeQuery = true)
 	String  findcardnumber(String cardname, String username);
 	
-	//multiple data retrival
-	@Query(value = "SELECT cardnumber ,cardname ,amount FROM Carddetails u WHERE u.username= ?#{[0]}", nativeQuery = true)
-	String[][] multipleretrival(String username);
+	//cardnumber for all cards per user 
+	@Query(value = "SELECT cardnumber  FROM Carddetails u WHERE u.username= ?#{[0]}", nativeQuery = true)
+	ArrayList<String> usedcardnumber(String username);
+    
+	//cardname for all cards per user 
+	@Query(value = "SELECT cardname  FROM Carddetails u WHERE u.username= ?#{[0]}", nativeQuery = true)
+	ArrayList<String> usedcardsname(String username);
+	
+	//amount for all cards per user 
+	@Query(value = "SELECT amount  FROM Carddetails u WHERE u.username= ?#{[0]}", nativeQuery = true)
+	ArrayList<String> usedcardsamount(String username);
+	
+	//card date for all cards per user 
+	@Query(value = "SELECT date  FROM Carddetails u WHERE u.username= ?#{[0]}", nativeQuery = true)
+	ArrayList<String> usedcardsdate(String username);
 
 	
 }
