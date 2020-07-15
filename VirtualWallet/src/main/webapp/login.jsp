@@ -39,7 +39,7 @@
 		<label>User Name</label>
 	    <input type="text" name="username" id="username" /><br>
 		<br> <label>Password</label><br> <input type="password"
-			name="password" id="password" value="wallet@2020" /><br> <br>
+			name="password" id="password"  /><br> <br>
 		<button id="login">login</button>
 
 	</form>
