@@ -1,7 +1,7 @@
 package com.wipro.application;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

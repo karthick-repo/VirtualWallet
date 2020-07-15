@@ -22,26 +22,7 @@ class WalletServiceImp implements WalletService {
 	
 	ArrayList al = new ArrayList();
 	
-	public void verify_details(String cardname, int  amount, String username)
-	{
-		int acc_balance = ws.account_balance(username);
-		System.out.println(acc_balance);
-		if (acc_balance >= amount && amount <= 10000) {
-			
-			System.out.println("Valid");
-			finalbalance=finalbalance-amount;
-			repo.findById(username).get().setAmount(finalbalance);
-				
-			
-		}
-		else
-		{
-			System.out.println("In-Valid");
-			
-		}
-		
-	}
-
+	
 	// used cards
 	public int cards_avaliable_size(String username) {
 		return cardsrepo.findUsersbyid(username).size();
@@ -58,6 +39,7 @@ class WalletServiceImp implements WalletService {
 
 		if (repo.findById(username).isPresent())// if username present in db
 		{
+			
 			al.add(repo.findById(username).get().getusername());
 			al.add(repo.findById(username).get().getPassword());
 			al.add(repo.findById(username).get().getAmount());

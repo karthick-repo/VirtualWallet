@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -15,9 +15,9 @@
 <label>Card Number</label>
 <p>${Card_Number}</p>
 <label>Card Balance</label>
-<p>${Card_Balance}</p>
+<p>${cardBalance}</p>
 
-<form method="POST" action="view_cards">
+<form  action="view_cards">
 		<input type="submit" value="Viewcards" />
 	</form>
 </body>

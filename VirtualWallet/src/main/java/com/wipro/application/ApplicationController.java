@@ -1,13 +1,12 @@
 package com.wipro.application;
 
 import static com.wipro.application.Constants.MAXIMUM_AMOUNT_REACHED;
-import static com.wipro.application.Constants.MAXIMUM_CARD_LIMIT;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,13 +20,13 @@ public class ApplicationController {
 	@Autowired
 	WalletService ws;
 
-	public String username;
-	public int totalcards = 3;
-	public int currentcards;
+	public static  String username;
+	private int totalcards = 3;
+	private int currentcards;
 	int balance;
 	int rs;
 	int check = 0;
-	public int avaliablecards = totalcards - currentcards;
+	private int avaliablecards = totalcards - currentcards;
 	ArrayList al = new ArrayList();
 	ArrayList al2 = new ArrayList();
 	ModelAndView mv = new ModelAndView();
@@ -57,20 +56,20 @@ public class ApplicationController {
 		// inputs entered by user
 		int amount = cd.getAmount();
 		String cardname = cd.getCardname();
-		int card_balance = cardsrepo.findbalanceofcard(cardname, username);
+		int cardBalance = cardsrepo.findbalanceofcard(cardname, username);
 
-		if ((amount >= 100 && amount <= 1000) && (card_balance + amount <= 10000)) {
+		if ((amount >= 100 && amount <= 10000) && (cardBalance + amount <= 10000)) {
 			int current_balance = ws.account_balance(username);
 			repo.update_account_balance(current_balance - amount, username);
 
-			amount = card_balance + amount;
+			amount = cardBalance + amount;
 			cardsrepo.updateamount(amount, cardname, username);
-			card_balance = cardsrepo.findbalanceofcard(cardname, username);
+			cardBalance = cardsrepo.findbalanceofcard(cardname, username);
 
 			topupsuccess.setViewName("topupsuccess.jsp");
 			topupsuccess.addObject("Card_Name", cardname);
 			topupsuccess.addObject("Card_Number", cardsrepo.findcardnumber(cardname, username));
-			topupsuccess.addObject("Card_Balance", card_balance);
+			topupsuccess.addObject("cardBalance", cardBalance);
 			return topupsuccess;
 		} else {
 			ModelAndView topuperror = new ModelAndView();
@@ -83,7 +82,7 @@ public class ApplicationController {
 
 	}
 
-	@RequestMapping("view_cards")
+	@GetMapping("view_cards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
 		if (cardsrepo.findUsersbyid(username).isEmpty()) {
@@ -127,7 +126,7 @@ public class ApplicationController {
 
 	}
 
-	@RequestMapping("create_card_success")
+	@RequestMapping(value="/create_card_success")
 	public ModelAndView createcards(Carddetails carddetail) {
 		ModelAndView successmessage = new ModelAndView();
 		int amount = carddetail.getAmount();
@@ -139,7 +138,7 @@ public class ApplicationController {
 			successmessage.addObject("date", "01-01-2050");
 			successmessage.addObject("cardname", carddetail.getCardname());
 			successmessage.addObject("cardnumber", carddetail.getCardnumber());
-			successmessage.addObject("cardbalance", carddetail.getAmount());
+			successmessage.addObject("cardBalance", carddetail.getAmount());
 
 			return successmessage;
 		} else {

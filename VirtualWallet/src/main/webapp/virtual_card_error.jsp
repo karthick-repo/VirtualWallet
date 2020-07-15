@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <%@include file="navbar.jsp"%>
@@ -10,7 +10,7 @@
 <body>
 <p>${msg}</p>
 
-<form method="POST" action="view_cards">
+<form action="view_cards">
 		<input type="submit" value="Viewcards" />
 	</form>
 </body>

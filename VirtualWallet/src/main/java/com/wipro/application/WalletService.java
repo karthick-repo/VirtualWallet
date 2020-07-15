@@ -11,6 +11,4 @@ public interface WalletService {
 
 	public int account_balance(String username);
 
-	public void verify_details(String cardname, int amount, String username);
-
 }

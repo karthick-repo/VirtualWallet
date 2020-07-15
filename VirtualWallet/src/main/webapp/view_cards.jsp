@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>View Cards Wallet-View Cards</title>
@@ -19,11 +19,10 @@
 		%>
 
 		<div style="width: 300px; height: 100px; border: 1px solid #000;">
-			<label>  ${userscardname.get(2)}</label><br>
-			<label> ${allcards.get(2)}</label> <br>
-			<labe> ${usersdate.get(2)}</label><br>
-			<label>$ </label> ${usersamount.get(2)}<br>
-		</div>
+			Card Number &nbsp<label lbl-cardname>${allcards.get(2)}</label> <br>
+			Card Name &nbsp<label lbl-cardnumber>${userscardname.get(2)}</label> <br>
+			Card Date  &nbsp<label lbl-expiry> ${usersdate.get(2)} </label><br>
+			Card Amount &nbsp<label lbl-cardbalance>${usersamount.get(2)} </label> <br>		</div>
 
 		<% use=use-1;
 			}
@@ -31,20 +30,22 @@
 		%>
 
 		<div style="width: 300px; height: 100px; border: 1px solid #000;">
-			<label>Card Number  </label> ${allcards.get(1)}<br>
-			<label>Card Name  </label> ${userscardname.get(1)}<br>
-			<label>Card Date  </label> ${usersdate.get(1)}<br>
-			<label>Card Amount  </label> ${usersamount.get(1)}<br>
+			Card Number &nbsp<label lbl-cardname>${allcards.get(1)}</label> <br>
+			Card Name &nbsp<label lbl-cardnumber>${userscardname.get(1)}</label> <br>
+			Card Date  &nbsp<label lbl-expiry> ${usersdate.get(1)} </label><br>
+			Card Amount &nbsp<label lbl-cardbalance>${usersamount.get(1)} </label> <br>		</div>
+
 		</div>
 		<%use=use-1;
 			}
 		if (use ==1) {
 		%>
 		<div style="width: 300px; height: 100px; border: 1px solid #000;">
-		<label>Card Number  </label> ${allcards.get(0)}<br>
-			<label>Card Name  </label> ${userscardname.get(0)}<br>
-			<label>Card Date  </label> ${usersdate.get(0)}<br>
-			<label>Card Amount  </label> ${usersamount.get(0)}<br>
+		   Card Number &nbsp<label lbl-cardname>${allcards.get(0)}</label> <br>
+			Card Name &nbsp<label lbl-cardnumber>${userscardname.get(0)}</label> <br>
+			Card Date  &nbsp<label lbl-expiry> ${usersdate.get(0)} </label><br>
+			Card Amount &nbsp<label lbl-cardbalance>${usersamount.get(0)} </label> <br>		</div>
+
 		</div>
 		<%
 			}
@@ -53,7 +54,7 @@
 	</div>
 
 
-	<form method="POST" action="create_card">
+	<form  action="create_card">
 		<%
 			int used_cards = (int) request.getAttribute("currentcards");
 		%>

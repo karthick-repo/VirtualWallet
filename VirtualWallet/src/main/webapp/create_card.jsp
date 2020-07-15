@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Create cards</title>
@@ -11,7 +11,7 @@
 <h3 style="text-align:center">Create New VirtualCard</h3>
 <body>
 	<form method="POST" action="create_card_success">
-		<div align="center" style="margin-top: -70px;">
+		
 			<input type="hidden" id="username" name="username" value="${username}"
 				required><br />
 			<br /> <input type="hidden" id="cardnumber" name="cardnumber"
