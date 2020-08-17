@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: VirtualWallet
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: dc-user
+Implementation-Vendor-Id: com.wipro
+Build-Jdk: 1.8.0_251
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/VirtualWallet
+Created-By: Maven Integration for Eclipse
+
