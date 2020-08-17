@@ -1,0 +1,28 @@
+
+h1 {
+	color: #000000;
+	text-align: center;
+}
+
+.loginbody {
+	margin:0 auto;
+	width:250px;
+	padding: 50px;
+}
+form {
+	
+}
+
+#outer {
+	text-align: center;
+}
+
+.inner {
+	display: inline-block;
+	width: 130px;
+	padding: 10px;
+	text-align: center;
+}
+h3{
+	display:inline;
+}
