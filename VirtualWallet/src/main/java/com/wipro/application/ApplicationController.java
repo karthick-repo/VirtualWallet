@@ -156,7 +156,8 @@ public class ApplicationController {
 
 	@RequestMapping("dashboard")
 	public ModelAndView validate(Userdetails usrdtls) {
-
+         //intially check=0, if already validated details check=1
+		
 		if (check == 1) {
 			mv.addObject("amount", ws.account_balance(username));
 			mv.addObject("tcards", 3 - ws.cards_avaliable_size(username));
@@ -164,7 +165,8 @@ public class ApplicationController {
 			return mv;
 		} else {
 			username = usrdtls.getusername();
-			check = ws.validate_user_details(usrdtls);
+			String password=usrdtls.getPassword();
+			check = ws.validate_user_details(username,password);
 			if (check == 1) {
 				mv.addObject("amount", ws.account_balance(username));
 				mv.addObject("tcards", 3 - ws.cards_avaliable_size(username));

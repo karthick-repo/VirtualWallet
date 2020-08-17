@@ -32,11 +32,9 @@ class WalletServiceImp implements WalletService {
 
 		return repo.findById(username).get().getAmount();
 	}
-	public int validate_user_details(Userdetails usrdtls)
+	public int validate_user_details(String username, String password)
 	{ 
-		 String username = usrdtls.getusername();
-		 String password = usrdtls.getPassword();
-
+		
 		if (repo.findById(username).isPresent())// if username present in db
 		{
 			
@@ -46,6 +44,8 @@ class WalletServiceImp implements WalletService {
 			al.add(repo.findById(username).get().getCcard());
 			al.add(repo.findById(username).get().getTcards());
 			
+			
+			System.out.println(al.get(0)+"=="+al.get(1));
 			if (al.get(0).equals(username) && (al.get(1).equals(password)))
 			{
 				return 1;
