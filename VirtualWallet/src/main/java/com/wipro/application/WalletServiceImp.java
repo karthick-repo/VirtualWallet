@@ -1,6 +1,7 @@
 package com.wipro.application;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,28 +25,28 @@ class WalletServiceImp implements WalletService {
 	
 	
 	// used cards
-	public int cards_avaliable_size(String username) {
+	public int cardsAvaliableSize(String username) {
 		return cardsrepo.findUsersbyid(username).size();
 	}
 
-	public int account_balance(String username) {
+	public int accountBalance(String username) {
 
-		return repo.findById(username).get().getAmount();
+		return repo.getBalance(username);
 	}
-	public int validate_user_details(String username, String password)
+	
+	public int validateUserDetails(String username, String password)
 	{ 
 		
 		if (repo.findById(username).isPresent())// if username present in db
 		{
 			
-			al.add(repo.findById(username).get().getusername());
-			al.add(repo.findById(username).get().getPassword());
-			al.add(repo.findById(username).get().getAmount());
-			al.add(repo.findById(username).get().getCcard());
-			al.add(repo.findById(username).get().getTcards());
+			al.add(username);
+			al.add(repo.getPassword(username));
+			al.add(repo.getBalance(username));
+			al.add(repo.cCards(username));
+			al.add(repo.tCcards(username));
 			
 			
-			System.out.println(al.get(0)+"=="+al.get(1));
 			if (al.get(0).equals(username) && (al.get(1).equals(password)))
 			{
 				return 1;

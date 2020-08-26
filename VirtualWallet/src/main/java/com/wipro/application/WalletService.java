@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public interface WalletService {
 	
-	public int validate_user_details(String username, String password);
+	public int validateUserDetails(String username, String password);
 
-	public int cards_avaliable_size(String username);
+	public int cardsAvaliableSize(String username);
 
-	public int account_balance(String username);
+	public int accountBalance(String username);
 
 }
