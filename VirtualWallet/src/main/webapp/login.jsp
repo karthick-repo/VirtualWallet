@@ -6,15 +6,18 @@
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
+<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
 <title>Virtual Cards Wallet - Login</title>
 </head>
 
 <script type="text/javascript">
 	function val() {
-
+           //some lines are replaced with jquery
 		document.getElementById("error-message").innerHTML = "";
-		var userName = document.getElementById("username");
-		var password = document.getElementById("password");
+		//var userName = document.getElementById("username");
+		var userName=$('#username').val();
+		//var password = document.getElementById("password");
+		var password=$('#password').val();
 		if (userName.value.trim().length > 30) {
 			document.getElementById("error-message").innerHTML = "User Name  not more than 30 characters";
 			return false;

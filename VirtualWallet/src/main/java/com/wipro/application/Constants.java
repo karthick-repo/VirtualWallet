@@ -6,5 +6,10 @@ public class Constants {
 	public static final int MAXIMUM_CARD_LIMIT = 3;
 	public static final String AVALIABLE_BALANCE = "Avaliable Balance";
 	public static final String LOGIN="login.jsp";
+	
+	private Constants()
+	{
+		
+	}
 
 }

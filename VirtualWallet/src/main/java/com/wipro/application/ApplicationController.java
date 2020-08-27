@@ -1,6 +1,7 @@
 package com.wipro.application;
 
-import static com.wipro.application.Constants.*;
+import static com.wipro.application.Constants.LOGIN;
+import static com.wipro.application.Constants.MAXIMUM_AMOUNT_REACHED;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,11 @@ public class ApplicationController {
 	@Autowired
 	WalletService ws;
 
-	public String username;
+	public String username ;
 	int balance;
 	int rs;
 	int check = 0;
-	ArrayList al = new ArrayList();
-	ArrayList al2 = new ArrayList();
+	
 	ModelAndView mv = new ModelAndView();
 
 	@GetMapping("login")
@@ -34,7 +34,7 @@ public class ApplicationController {
 		return LOGIN;
 	}
 
-	@RequestMapping("topupcard")
+	@RequestMapping("/topupcard")
 	public ModelAndView topupcard() {
 		ModelAndView topup = new ModelAndView();
 		ArrayList<String> usercards = cardsrepo.findcardname(username);
@@ -56,8 +56,8 @@ public class ApplicationController {
 		int cardBalance = cardsrepo.findbalanceofcard(cardname, username);
 
 		if ((amount >= 100 && amount <= 10000) && (cardBalance + amount <= 10000)) {
-			int current_balance = ws.accountBalance(username);
-			repo.updateAccountBalance(current_balance - amount, username);
+			int currentBalance = ws.accountBalance(username);
+			repo.updateAccountBalance(currentBalance - amount, username);
 
 			amount = cardBalance + amount;
 			cardsrepo.updateamount(amount, cardname, username);
@@ -79,7 +79,7 @@ public class ApplicationController {
 
 	}
 
-	@GetMapping("view_cards")
+	@RequestMapping("view_cards")
 	public ModelAndView viewcards() {
 		ModelAndView viewcards = new ModelAndView();
 		if (cardsrepo.findUsersbyid(username).isEmpty()) {
@@ -127,9 +127,9 @@ public class ApplicationController {
 	public ModelAndView createcards(Carddetails carddetail) {
 		ModelAndView successmessage = new ModelAndView();
 		int amount = carddetail.getAmount();
-		int acc_current_balance = ws.accountBalance(username);
+		int accCurrentBalance = ws.accountBalance(username);
 		if (carddetail.getAmount() <= 10000) {
-			repo.updateAccountBalance(acc_current_balance - amount, username);
+			repo.updateAccountBalance(accCurrentBalance - amount, username);
 			cardsrepo.save(carddetail);
 			successmessage.setViewName("create_card_success.jsp");
 			successmessage.addObject("date", "01-01-2050");
@@ -151,8 +151,8 @@ public class ApplicationController {
 
 	@RequestMapping("dashboard")
 	public ModelAndView validate(Userdetails usrdtls) {
-         //intially check=0, if already validated details check=1
 		
+         //intially check=0, if already validated details check=1
 		if (check == 1) {
 			mv.addObject("amount", ws.accountBalance(username));
 			mv.addObject("tcards", 3 - ws.cardsAvaliableSize(username));
@@ -183,4 +183,7 @@ public class ApplicationController {
 	public String logout() {
 		return LOGIN;
 	}
+	
+
+	
 }
