@@ -7,6 +7,7 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="jqueryFunction.js"></script>
 <title>Virtual Cards Wallet - Login</title>
 </head>
 
